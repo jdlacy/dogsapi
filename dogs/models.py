@@ -9,7 +9,7 @@ class Dog(models.Model):
     age = models.IntegerField() # age (an integer)
     breed = models.ForeignKey( # breed (a foreign key to the Breed Model)
         'Breed',
-        related_name='dogs',
+        related_name='breeds',
         on_delete=models.CASCADE)
     gender = models.CharField(max_length=200) # gender (a character string)
     color = models.CharField(max_length=200)      # color (a character string)
@@ -32,13 +32,11 @@ class Breed(models.Model):
     )
 
     name = models.CharField(max_length=200) # name (a character string)
-
     size = models.CharField( # size (a character string) [should accept Tiny, Small, Medium, Large]
         max_length=200, 
         choices=SIZE_CHOICES,
         default='MEDIUM',
     )
-
     friendliness = models.IntegerField( # friendliness (an integer field) [should accept values from 1-5]
         default=1,
         validators=[
@@ -46,7 +44,6 @@ class Breed(models.Model):
             MaxValueValidator(5)
         ]
     )
-
     trainability = models.IntegerField( # trainability (an integer field) [should accept values from 1-5]
         default=1,
         validators=[
@@ -54,7 +51,6 @@ class Breed(models.Model):
             MaxValueValidator(5)
         ]
     )
-
     sheddingamount = models.IntegerField( # sheddingamount (an integer field) [should accept values from 1-5]
         default=1,
         validators=[
@@ -62,7 +58,6 @@ class Breed(models.Model):
             MaxValueValidator(5)
         ]
     )
-
     exerciseneeds = models.IntegerField( # exerciseneeds (an integer field) [should accept values from 1-5]
         default=1,
         validators=[
@@ -70,3 +65,9 @@ class Breed(models.Model):
             MaxValueValidator(5)
         ]
     )
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
